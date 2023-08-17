@@ -1,25 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+
+import Chat from './Chat';
+import { Flex } from './Flex';
+import Landing from './Landing';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [scrolled, setScrolled] = useState(false);
+  console.log('scrolled', scrolled);
+
+  return <Flex height="100vh" width="100vw" position="relative" >
+    <Landing visible={!scrolled} onScrollClick={() => setScrolled(true)} />
+    <Chat visible={scrolled} />
+  </Flex>
 }
 
 export default App;
