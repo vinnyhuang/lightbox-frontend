@@ -1,7 +1,10 @@
+import ReactMarkdown from 'react-markdown';
 import styled from 'styled-components';
 
 import { MESSAGE_TYPES, PHASES } from './constants';
-import { Questionnaire } from './Questionnaire';
+// import { Questionnaire } from './Questionnaire';
+// import { Questionnaire as Questionnaire2 } from './Questionnaire2';
+import { DesignSelection } from './DesignSelection';
 
 const MessageBubble = styled.div`
   padding: 15px;
@@ -38,28 +41,36 @@ const UserLabel = styled(NameLabel)`
   align-self: flex-end;
 `;
 
-export function Message({ isUserMessage, messageType, stateSetters, children }) {
-  let content = children;
+export function Message({ chatState, isUserMessage, messageType, stateSetters, phase, children }) {
+  let content;
+  console.log(chatState, isUserMessage, messageType);
 
   switch (messageType) {
-    case (MESSAGE_TYPES.QUESTIONNAIRE):
-      const questionsData = JSON.parse(children);
-      const submitSelections = (formattedSelections) => {
-        stateSetters.setChatState(prev => ({ ...prev, selections: formattedSelections }))
-        stateSetters.setMessages(prev => (
-          [
-            ...prev,
-            {
-              fromUser: false,
-              content: 'Anything other information you\'d like to add about your tastes or details of your project?'
-            }
-          ]
-        ));
-        stateSetters.setPhase(PHASES.MORE_DETAILS);
-      }
-      content = <Questionnaire questionsDataRaw={questionsData} onSubmit={submitSelections} />
+    // case (MESSAGE_TYPES.QUESTIONNAIRE):
+    //   const questionsData = JSON.parse(children);
+    //   const submitSelections = (formattedSelections) => {
+    //     stateSetters.setChatState(prev => ({ ...prev, selections: formattedSelections }))
+    //     stateSetters.setMessages(prev => (
+    //       [
+    //         ...prev,
+    //         {
+    //           fromUser: false,
+    //           content: 'Anything other information you\'d like to add about your tastes or details of your project?'
+    //         }
+    //       ]
+    //     ));
+    //     stateSetters.setPhase(PHASES.MORE_DETAILS);
+    //   }
+    //   content = <Questionnaire questionsDataRaw={questionsData} onSubmit={submitSelections} />
+    //   break;
+    // case (MESSAGE_TYPES.QUESTIONNAIRE2):
+    //   content = <Questionnaire2 />
+    //   break;
+    case (MESSAGE_TYPES.DESIGN_SELECTION):
+        content = <DesignSelection chatState={chatState} stateSetters={stateSetters} phase={phase} />
       break;
     default:
+      content = <ReactMarkdown>{children}</ReactMarkdown>
       break;
   }
 
