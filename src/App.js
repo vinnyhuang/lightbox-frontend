@@ -6,7 +6,6 @@ import Landing from './Landing';
 
 function App() {
   const [scrolled, setScrolled] = useState(false);
-  console.log('scrolled', scrolled);
 
   return <Flex height="100vh" width="100vw" position="relative" >
     <Landing visible={!scrolled} onScrollClick={() => setScrolled(true)} />

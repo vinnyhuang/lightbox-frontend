@@ -4,45 +4,10 @@ import styled from 'styled-components';
 import { PHASES } from './constants';
 import { getPrompt } from './promptTemplates';
 
-const N_QUESTIONS = 10;
-const N_CHOICES = 5;
-const N_DATA_ITEMS = N_CHOICES + 1;
-
-const QuestionBlock = styled.div`
-  margin: 4px 0;
-`;
-
-const OptionBlock = styled.div`
-  margin: 2px 0;
-`;
-
-const OptionButton = styled.button`
-  width: 30px;
-  margin-right: 4px;
-  background-color: ${({ selected }) => selected ? '#C76383' : '#DDD'};
-`;
-
 const SubmitButton = styled.button`
   width: 100px;
   margin-top: 4px;
 `;
-
-const Question = ({ question, options, selection, setSelection }) => {
-  return <QuestionBlock>
-    <div>{question}</div>
-    {options.map((option, i) => (
-      <OptionBlock>
-        <OptionButton
-          selected={selection === i}
-          onClick={() => setSelection(i)}
-        >
-          {String.fromCharCode(65 + i)}
-        </OptionButton>
-        {option}
-      </OptionBlock>
-    ))}
-  </QuestionBlock>
-}
 
 const Container = styled.div`
   display: flex;
@@ -62,9 +27,7 @@ const ImageRow = styled.div`
 `;
 
 export const DesignSelection = ({ chatState, phase, stateSetters }) => {
-  console.log('designselection', chatState);
   const [selections, setSelections] = useState({});
-  console.log('selections', selections);
 
   const { designSuggestions, images, suggestionNames } = chatState;
 
@@ -85,7 +48,6 @@ export const DesignSelection = ({ chatState, phase, stateSetters }) => {
                   />
                   <span>{i+1}. <strong>{item.name}</strong>: {item.explanation}</span>
                 </TextRow>
-                {/* <div>{`${i}. ${item.name}: ${item.explanation}`}</div> */}
                 {
                   suggestionNames.includes(item.name) ?
                   <ImageRow>
@@ -119,11 +81,6 @@ export const DesignSelection = ({ chatState, phase, stateSetters }) => {
           .then((data) => {
             const { message, ...state } = data;
             const designExplanationFormatted = message.replace('\n', ' ');
-            // const designExplanation = message.slice(0, message.indexOf('<'));
-            // const attributeList = message.slice(
-            //   message.indexOf('<') + 1,
-            //   message.indexOf('>'),
-            // );
             setLoading(false);
             setMessages(prev => ([
               ...prev,
