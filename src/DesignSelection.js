@@ -72,7 +72,7 @@ export const DesignSelection = ({ chatState, phase, stateSetters }) => {
         const selectedString = selectedDesigns.join(', ');
 
         setLoading(true);
-        fetch("/gpt-chat", {
+        fetch(`${process.env.REACT_APP_BACKEND_URL}/gpt-chat`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json; charset=utf-8' },
           body: JSON.stringify({ ...chatState, message: getPrompt(PHASES.DESIGN_SELECTION, [selectedString]) }),

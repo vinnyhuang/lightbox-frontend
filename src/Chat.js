@@ -87,7 +87,7 @@ function Chat({ visible }) {
               break;
               case PHASES.QUESTIONNAIRE:
                 setLoading(true);
-                fetch("/gpt-chat", {
+                fetch(`${process.env.REACT_APP_BACKEND_URL}/gpt-chat`, {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json; charset=utf-8' },
                   body: JSON.stringify({ ...chatState, message: getPrompt(PHASES.QUESTIONNAIRE, [userMessage]) }),
@@ -120,7 +120,7 @@ function Chat({ visible }) {
                       }
                     });
                     setChatState(prev => ({ ...prev, ...state, designSuggestions }));
-                    fetch("/google-image-search", {
+                    fetch(`${process.env.REACT_APP_BACKEND_URL}/google-image-search`, {
                       method: 'POST',
                       headers: { 'Content-Type': 'application/json; charset=utf-8' },
                       body: JSON.stringify({ itemNames, searchTerms }),
@@ -146,7 +146,7 @@ function Chat({ visible }) {
                 break;
               case PHASES.USER_IMAGE_UPLOAD:
                 setLoading(true);
-                fetch("/gpt-chat", {
+                fetch(`${process.env.REACT_APP_BACKEND_URL}/gpt-chat`, {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json; charset=utf-8' },
                   body: JSON.stringify({ ...chatState, message: getPrompt(PHASES.USER_IMAGE_UPLOAD, []) }),
@@ -161,7 +161,7 @@ function Chat({ visible }) {
                 break;
             default:
               setLoading(true);
-              fetch("/gpt-chat", {
+              fetch(`${process.env.REACT_APP_BACKEND_URL}/gpt-chat`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json; charset=utf-8' },
                 body: JSON.stringify({ ...chatState, message: userMessage }),
